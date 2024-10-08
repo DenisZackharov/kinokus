@@ -1,0 +1,57 @@
+version: "3.8"
+networks:
+  dev:
+
+services:
+  backend:
+    build:
+      context: ./kinokus-api
+      dockerfile: Dockerfile
+    container_name: backend
+    restart: unless-stopped
+    env_file:
+      - kinokus-api/.env.prod
+    volumes:
+      - ./backend:/app
+      - bundle_data:/usr/local/bundle
+      - ./backend/tmp/pids:/app/tmp/pids
+      - storage_data:/storage
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    networks:
+      - dev
+
+  frontend:
+    build:
+      context: ./kinokus-spa
+      dockerfile: Dockerfile
+    container_name: frontend
+    restart: unless-stopped
+    env_file:
+      - kinokus-spa/.env
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - dev
+
+  db:
+    env_file:
+      - kinokus-api/.env
+    image: postgres:14
+    container_name: db
+    restart: unless-stopped
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - dev
+
+volumes:
+  db_data:
+  bundle_data:
+  storage_data:
