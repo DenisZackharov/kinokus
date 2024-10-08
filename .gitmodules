@@ -1,0 +1,6 @@
+[submodule "kinokus-api"]
+	path = kinokus-api
+	url = https://github.com/DenisZackharov/kinokus-api.git
+[submodule "kinokus-spa"]
+	path = kinokus-spa
+	url = https://github.com/DenisZackharov/kinokus-spa.git
