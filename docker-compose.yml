@@ -7,6 +7,7 @@ services:
     build:
       context: ./kinokus-api
       dockerfile: Dockerfile
+    image: deniszakharov2121/kinokus-api
     container_name: backend
     restart: unless-stopped
     env_file:
@@ -26,6 +27,7 @@ services:
     build:
       context: ./kinokus-spa
       dockerfile: Dockerfile
+    image: deniszakharov2121/kinokus-spa
     container_name: frontend
     restart: unless-stopped
     env_file:
