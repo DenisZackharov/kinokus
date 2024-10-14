@@ -5,30 +5,25 @@ services:
   backend:
     build:
       context: ./kinokus-api
-      dockerfile: Dockerfile
     image: deniszakharov2121/kinokus-api
-    container_name: backend
-    restart: unless-stopped
     env_file:
       - kinokus-api/.env.prod
     volumes:
-      - ./backend:/app
       - bundle_data:/usr/local/bundle
-      - ./backend/tmp/pids:/app/tmp/pids
+    tty: true
+    stdin_open: true
     ports:
       - "3000:3000"
     depends_on:
       - db
     networks:
       - dev
+    command: bin/docker-entrypoint
 
   frontend:
     build:
       context: ./kinokus-spa
-      dockerfile: Dockerfile
     image: deniszakharov2121/kinokus-spa
-    container_name: frontend
-    restart: unless-stopped
     env_file:
       - kinokus-spa/.env
     ports:
@@ -39,11 +34,8 @@ services:
       - dev
 
   db:
-    env_file:
-      - kinokus-api/.env
     image: postgres:14
-    container_name: db
-    restart: unless-stopped
+    restart: always
     volumes:
       - db_data:/var/lib/postgresql/data
     ports:
