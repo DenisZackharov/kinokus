@@ -28,15 +28,15 @@ services:
       - kinokus-spa/.env
     ports:
       - 80:80
-      - 443:443
+      # - 443:443
     restart: always
     depends_on:
       - backend
     networks:
       - dev
-    volumes:
-      - ./nginx/conf/:/etc/nginx/conf.d/:ro
-      - ./certbot/www:/var/www/certbot/:ro
+    # volumes:
+    #   - ./nginx/conf/:/etc/nginx/conf.d/:ro
+    #   - ./certbot/www:/var/www/certbot/:ro
 
   # certbot:
   #   image: certbot/certbot:latest
